@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "jsx": "react",
+    "outDir": "build",
+    "strict": true,
+    "moduleResolution": "node"
+  },
+  "include": ["src", "./@types"]
+}
