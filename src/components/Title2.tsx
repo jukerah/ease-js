@@ -5,7 +5,7 @@ interface TitleProps {
   status: boolean;
 }
 
-export const Title = React.createComponent(({ status, title }: TitleProps) => {
+export const Title2 = React.createComponent(({ status, title }: TitleProps) => {
   return (
       <div>
         <h1>{title}</h1>

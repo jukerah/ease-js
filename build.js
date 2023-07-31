@@ -15,10 +15,10 @@ async function createFolderIfNotExists(folderPath) {
 // Função para copiar o arquivo index.html para a pasta build
 async function copyIndexHtml() {
   const sourceHTMLPath = path.join(__dirname, "index.html");
-  const targetHTMLPath = path.join(__dirname, "build", "index.html");
+  const targetHTMLPath = path.join(buildFolderPath, "index.html");
 
   try {
-    // Copiar arquivo index.html para a pasta build!"
+    // Copiar arquivo index.html para a pasta build
     await fs.copyFile(sourceHTMLPath, targetHTMLPath);
   } catch (error) {
     console.error("Erro ao copiar o arquivo index.html:", error);
@@ -40,7 +40,7 @@ function buildProject() {
   return new Promise((resolve, reject) => {
     webpack(webpackConfig, (err, stats) => {
       if (err) {
-        console.error("Erro durante a compilação:", err);
+        console.error("Compilation error:", err);
         reject(err);
       } else {
         console.log(stats.toString({ colors: true }));
@@ -65,9 +65,9 @@ async function runBuild() {
     // Copie o arquivo index.html para a pasta build
     await copyIndexHtml();
 
-    console.log("Construção concluída!");
+    console.log("Finished build!");
   } catch (error) {
-    console.error("Erro durante a construção:", error);
+    console.error("Build execution error:", error);
   }
 }
 

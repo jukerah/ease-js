@@ -20,7 +20,7 @@ declare namespace JSX  {
     id?: string;
     className?: string;
     name?: string;
-    onClick?: (event: ClickEvent) => void;
+    "e-click"?: (event: ClickEvent) => void;
     "e-model="?: string;
     "e-ref"?: string;
     // Adicione mais atributos comuns aqui
@@ -52,7 +52,7 @@ declare namespace JSX  {
   interface InputHTMLAttributes extends HTMLAttributes {
     type?: string;
     value?: any;
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    "e-change"?: (event: ChangeEvent<HTMLInputElement>) => void;
     checked?: boolean;
     // Adicione mais atributos específicos para a tag <input> aqui
   }

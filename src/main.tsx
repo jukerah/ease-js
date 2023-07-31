@@ -1,6 +1,6 @@
-import Ease from "../modules/ease"
-import EaseDom from "../modules/ease-dom"
+import React from "../modules/react"
+import ReactDOM from "../modules/react-dom"
 import { App } from "./App"
 
 // Inicializa o projeto renderizando o App na div,com id root
-EaseDom.render(Ease.createElement(App, null), document.querySelector("#root"));
+ReactDOM.render(React.createElement(App, null), document.querySelector("#root"));

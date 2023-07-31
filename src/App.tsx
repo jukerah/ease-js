@@ -1,17 +1,16 @@
-import React, { useState } from "../modules/ease";
+import React, { useState, useEffect } from "../modules/react";
+
 import { Title } from "./components/Title";
+import { Title2 } from "./components/Title2";
+
 import { formatDate, formatDateTime } from "./utils";
 
-interface AppProps {
-  refId: string;
-}
-
-export const App = React.component(({ refId }: AppProps) => {
+export const App = React.createComponent(() => {
   const [ count, setCount ] = useState<number>(0);
   const [ text, setText ] = useState<string>("Texto inicial");
   const [ number, setNumber ] = useState<number>(0);
   const [ checkbox, setCheckbox ] = useState<boolean>(false);
-  const [ color, setColor ] = useState<string>("");
+  const [ color, setColor ] = useState<string>("#fb13ff");
   const [ date, setDate ] = useState<string>(formatDate(new Date(), "DD/MM/YYYY"));
   const [ dateTime, setDateTime ] = useState<string>(formatDateTime(new Date()));
   const [ email, setEmail ] = useState<string>("email@email.com");
@@ -27,15 +26,39 @@ export const App = React.component(({ refId }: AppProps) => {
   /*
     Todo useState é composto por um retorno [ nomeDoState, setState ]
     OBS: nomeSate.value é usado pegar o valor do estado usado para
-      //atributos html, value, onChange, onClick...
+      //atributos html, value, e-change, e-click...
   */
 
-  return (
-    <div e-ref={refId}>
-      <Title title="Contador" />
+  useEffect(() => {
+    console.log("função do useEffect com dependência")
+  }, [checkbox]);
 
-      <p>Contador: {count}</p>
-      <button onClick={(e) => setCount(++count.value)}>
+  useEffect(() => {
+    console.log("função do useEffect com 2 dependência")
+  }, [checkbox, count]);
+
+  useEffect(() => {
+    console.log("função do useEffect sem dependência")
+  }, []);
+
+
+  return (
+    <div id="app">
+      <Title e-if={!checkbox.value} status={checkbox} title="Contador" />
+      <Title2 e-if={checkbox.value} status={checkbox} title="Contador2" />
+
+      <p className="checkbox">Input checkbox: {checkbox}</p>
+      <input
+        type="checkbox"
+        checked={checkbox.value}
+        data-model={checkbox.id}
+        e-change={(event) => {
+          setCheckbox(event.target.checked)
+        }}
+      />
+
+      <p>Count: {count}</p>
+      <button e-click={() => setCount(count.value + 1)}>
         + 1
       </button>
 
@@ -43,24 +66,15 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="text"
         value={text.value}
-        onChange={(e: any) => setText(e.target.value)}
+        e-change={(e: any) => setText(e.target.value)}
       />
 
       <p className="number">Input number: {number}</p>
       <input
         type="number"
         value={number.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setNumber(event.target.value)
-        }}
-      />
-
-      <p className="checkbox">Input checkbox: {checkbox}</p>
-      <input
-        type="checkbox"
-        checked={checkbox.value}
-        onChange={(event) => {
-          setCheckbox(event.target.checked)
         }}
       />
 
@@ -68,7 +82,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="color"
         value={color.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setColor(event.target.value)
         }}
       />
@@ -77,7 +91,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="date"
         value={date.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setDate(event.target.value)
         }}
       />
@@ -86,7 +100,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="datetime-local"
         value={dateTime.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setDateTime(event.target.value)
         }}
       />
@@ -95,7 +109,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="email"
         value={email.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setEmail(event.target.value)
         }}
       />
@@ -104,7 +118,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="file"
         value={file.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setFile(event.target.value)
         }}
       />
@@ -113,7 +127,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="month"
         value={month.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setMonth(event.target.value)
         }}
       />
@@ -122,7 +136,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="month"
         value={month.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setMonth(event.target.value)
         }}
       />
@@ -131,7 +145,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="password"
         value={password.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setPassword(event.target.value)
         }}
       />
@@ -141,7 +155,7 @@ export const App = React.component(({ refId }: AppProps) => {
         type="radio"
         name="radio"
         checked
-        onClick={(e) => {
+        e-click={(e) => {
           setRadio(true)
           setRadio2(false)
         }}
@@ -151,7 +165,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="radio"
         name="radio"
-        onClick={(e) => {
+        e-click={(e) => {
           setRadio2(true)
           setRadio(false)
         }}
@@ -161,7 +175,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="range"
         value={range.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setRange(event.target.value)
         }}
       />
@@ -170,7 +184,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="search"
         value={search.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setSearch(event.target.value)
         }}
       />
@@ -179,7 +193,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="time"
         value={time.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setTime(event.target.value)
         }}
       />
@@ -188,7 +202,7 @@ export const App = React.component(({ refId }: AppProps) => {
       <input
         type="week"
         value={week.value}
-        onChange={(event) => {
+        e-change={(event) => {
           setWeek(event.target.value)
         }}
       />
